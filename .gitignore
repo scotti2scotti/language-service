@@ -1,0 +1,6 @@
+.vscode
+cld2
+language-detection-cld2
+node_modules
+target
+dependency-reduced-pom.xml
