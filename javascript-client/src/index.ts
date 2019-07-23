@@ -81,22 +81,3 @@ export class Client {
 
   private readonly path = (...segments: string[]) => [this.service, ...segments].join('/')
 }
-
-const client = new Client
-
-const urls = [
-  "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-  "https://github.com/request/request/tree/master/examples"
-]
-
-const test = async () => {
-  try {
-    const info = await client.stream(request.get(urls[1])) // client.url(urls[0])
-    console.log(info)
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-test()
-
