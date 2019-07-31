@@ -1,20 +1,22 @@
 {
-  "name": "s2s-language-service-client",
+  "name": "@s2s/language-service-client",
   "version": "0.0.1",
   "description": "Client for the language service",
   "keywords": [
     "language detection",
-    "text extraction"
+    "text extraction",
+    "natural language processing",
+    "etl"
   ],
   "author": "Alessandro Scotti <alex@scotti2scotti.com>",
-  "homepage": "https://gitlab.com/dubsar/language-service",
+  "homepage": "https://github.com/scotti2scotti/language-service",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/dubsar/language-service.git"
+    "url": "git+https://github.com/scotti2scotti/language-service.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/dubsar/language-service/issues"
+    "url": "https://github.com/scotti2scotti/language-service/issues"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
