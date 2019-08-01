@@ -111,12 +111,9 @@ export interface ClientOptions {
 }
 export declare const DefautlOptions: ClientOptions;
 export declare class Client {
-  private readonly service;
   constructor(options?: ClientOptions);
   readonly url: (url: string) => Promise<LanguageInfo>;
   readonly stream: (stream: Stream) => Promise<LanguageInfo>;
-  private callback;
-  private readonly path;
 }
 ```
 
