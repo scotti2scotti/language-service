@@ -9,7 +9,7 @@
     "etl"
   ],
   "author": "Alessandro Scotti <alex@scotti2scotti.com>",
-  "homepage": "https://github.com/scotti2scotti/language-service/javascript-client",
+  "homepage": "https://github.com/scotti2scotti/language-service/tree/master/javascript-client",
   "license": "MIT",
   "repository": {
     "type": "git",
