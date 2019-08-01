@@ -1,6 +1,6 @@
 {
   "name": "@s2s/language-service-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Client for the language service",
   "keywords": [
     "language detection",
@@ -9,11 +9,11 @@
     "etl"
   ],
   "author": "Alessandro Scotti <alex@scotti2scotti.com>",
-  "homepage": "https://github.com/scotti2scotti/language-service",
+  "homepage": "https://github.com/scotti2scotti/language-service/javascript-client",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scotti2scotti/language-service.git"
+    "url": "https://github.com/scotti2scotti/language-service.git"
   },
   "bugs": {
     "url": "https://github.com/scotti2scotti/language-service/issues"
