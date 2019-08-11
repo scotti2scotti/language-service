@@ -6,14 +6,14 @@ type VoidFn = (...args: any[]) => void
 export interface LanguageInfo {
   text: string
   language: {
-    language: number,
-    languages: string[],
-    languageName: string,
-    languageCode: string,
-    reliable: boolean,
-    languageCodeISO639_3: string,
+    language: number
+    languages: string[]
+    languageName: string
+    languageCode: string
+    reliable: boolean
+    languageCodeISO639_3: string
     languageCodes: string[]
-  },
+  }
   meta: { [key: string]: string }
 }
 
@@ -26,13 +26,13 @@ export interface ClientOptions {
 export const DefautlOptions: ClientOptions = {
   protocol: 'http',
   host: 'localhost',
-  port: 5656
+  port: 5656,
 }
 
 const settings = (): ClientOptions => {
   const { LS_PROTOCOL, LS_HOST, LS_PORT } = process.env
   if (!LS_HOST || !LS_PORT || !LS_PROTOCOL) {
-    console.warn("Missing environment variable(s)")
+    console.warn('Missing environment variable(s)')
     return DefautlOptions
   }
   return {
@@ -72,7 +72,11 @@ export class Client {
     return (error, { statusCode }, body) => {
       const ok = statusCode === 200 && !error
       if (ok) {
-        resolve(body)
+        try {
+          resolve(JSON.parse(body))
+        } catch (e) {
+          reject(e)
+        }
       } else {
         reject(!!error ? error : new Error(body))
       }
