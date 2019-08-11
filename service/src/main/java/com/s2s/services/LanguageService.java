@@ -36,6 +36,11 @@ final class LanguageInfo {
   }
 }
 
+/**
+  Not following redirects, consider using
+  https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/
+  taht does
+*/
 final class Handlers {
   public static final void stream(final HttpServerExchange exchange) throws Exception {
     try {
