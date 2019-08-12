@@ -2,22 +2,33 @@ package com.s2s.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.undertow.Undertow;
-import io.undertow.server.handlers.BlockingHandler;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.RoutingHandler;
+import io.undertow.server.handlers.BlockingHandler;
 import io.undertow.util.Headers;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import org.apache.tika.metadata.Metadata;
+import org.apache.http.HttpHost;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.tika.Tika;
+import org.apache.tika.metadata.Metadata;
 import org.commoncrawl.langdetect.cld2.Cld2;
 import org.commoncrawl.langdetect.cld2.Result;
 
@@ -55,7 +66,8 @@ final class Handlers {
   public static final void url(final HttpServerExchange exchange) throws Exception {
     try {
       final String url = exchange.getQueryParameters().get("url").getFirst();
-      final String json = Worker.readStream(new URL(url).openStream());
+      final String redirected = RedirectHandler.resolve(url);
+      final String json = Worker.readStream(new URL(redirected).openStream());
       send(exchange, json);
     } catch (Exception e) {
       error(exchange, e);
@@ -144,6 +156,26 @@ final class LanguageService {
     }
     catch (final Exception e) {
       return defaultValue;
+    }
+  }
+}
+
+final class RedirectHandler {
+  public static final String resolve(String url) throws IOException, URISyntaxException {
+    CloseableHttpClient httpclient = HttpClients
+      .custom()
+      .setRedirectStrategy(new LaxRedirectStrategy())
+      .build();
+    try {
+      HttpClientContext context = HttpClientContext.create();
+      HttpGet httpGet = new HttpGet(url);
+      httpclient.execute(httpGet, context);
+      HttpHost target = context.getTargetHost();
+      List<URI> redirectLocations = context.getRedirectLocations();
+      URI location = URIUtils.resolve(httpGet.getURI(), target, redirectLocations);
+      return location.toASCIIString();
+    } finally {
+        httpclient.close();
     }
   }
 }
